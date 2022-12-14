@@ -11,6 +11,7 @@ const File_Upload = () => {
       <form>
         <input type="file" id = "files" className="hidden" name = "files" multiple/>
       </form>
+      <button className="font-bold bg-teal-900 mt-2">Browse files</button>
     </div>
   </div>)
 }
