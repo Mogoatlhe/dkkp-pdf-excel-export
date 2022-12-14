@@ -8,8 +8,9 @@ const File_Upload = () => {
         <p className="text-slate-500">OR</p>
         <div className="border-t border-slate-500 w-8 mt-[9px]"></div>
       </div>
-      <form>
-        <input type="file" id = "files" className="hidden" name = "files" multiple/>
+      <form className="hidden">
+        <input type="file" id = "files" name = "files" multiple/>
+        <input type="submit" id = "submit"/>
       </form>
       <button className="font-bold bg-teal-900 mt-2">Browse files</button>
     </div>
