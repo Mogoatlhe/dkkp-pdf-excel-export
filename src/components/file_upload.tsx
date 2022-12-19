@@ -1,3 +1,5 @@
+import Folder from "./folder";
+
 const File_Upload = () => {
   const get_files = () => {
     const files_btn = document.querySelector("#files") as HTMLElement | null;
@@ -7,12 +9,13 @@ const File_Upload = () => {
     }
   };
   return (
-    <div className="flex flex-col items-center h-screen w-screen bg-teal-900 gap-6">
+    <div className="flex flex-col items-center h-screen w-screen bg-sky-500 gap-6">
       <h2 className="text-slate-300 font-bold mt-14 text-4xl w-80">
         Upload all the quartely documents
       </h2>
-      <div className="w-80 h-64 bg-slate-900 rounded-xl p-1 grid">
-        <div className="flex flex-col p-6 items-center border border-dashed border-slate-400 w-11/12 h-56 place-self-center rounded-lg">
+      <div className="w-80 min-h-64 bg-slate-900 py-5 rounded-xl p-1 grid">
+        <div className="flex flex-col p-6 gap-2 items-center border border-dashed border-slate-400 w-11/12 min-h-56 place-self-center rounded-lg">
+          <Folder />
           <p className="font-bold text-slate-400 text-center">
             Drag your documents here to start uploading
           </p>
@@ -26,7 +29,7 @@ const File_Upload = () => {
             <input type="submit" id="submit" />
           </form>
           <button
-            className="font-bold bg-teal-900 mt-2 text-slate-300"
+            className="font-bold bg-sky-500 mt-2 text-slate-300"
             onClick={get_files}
           >
             Browse files
