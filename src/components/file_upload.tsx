@@ -9,8 +9,8 @@ const File_Upload = () => {
     }
   };
   return (
-    <div className="flex flex-col items-center h-screen w-screen bg-sky-500 gap-6">
-      <h2 className="text-slate-300 font-bold mt-14 text-4xl w-80">
+    <div className="flex flex-col items-center h-screen w-screen gap-6">
+      <h2 className="text-slate-400 font-bold mt-14 text-4xl w-80">
         Upload all the quartely documents
       </h2>
       <div className="w-80 min-h-64 bg-slate-900 py-5 rounded-xl p-1 grid">
