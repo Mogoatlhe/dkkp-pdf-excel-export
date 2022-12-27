@@ -83,14 +83,6 @@ const File_Upload = () => {
             </button>
           </div>
         </div>
-        <div className="h-8 w-72 border border-slate-900 shadow-xl rounded-b-md flex items-center justify-center">
-          <progress
-            className="w-64 rounded-md"
-            aria-label="Content loading…"
-            max="100"
-            value="0"
-          ></progress>
-        </div>
       </div>
     </div>
   );
