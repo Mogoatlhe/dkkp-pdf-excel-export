@@ -1,9 +1,13 @@
 import React from "react";
+import { useState } from "react";
 import Folder from "./folder";
+import loading from "../assets/loading.gif";
 import Swal from "sweetalert2";
-import axios from "axios";
 
 const File_Upload = () => {
+  const [loadingVisibility, setLoadingVisibility] = useState("hidden");
+  const [uploadVisibility, setUploadVisibility] = useState("");
+
   const get_files = () => {
     const files_btn = document.querySelector("#files") as HTMLElement | null;
 
@@ -13,23 +17,39 @@ const File_Upload = () => {
   };
 
   const submitFile = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    setUploadVisibility("hidden");
+    setLoadingVisibility("");
     const files = e.target.files;
 
     if (files?.length === 0) {
-      Swal.fire({
-        icon: "error",
-        title: "Error!",
-        text: "No files were uploaded",
-      });
+      display_error("No files were uploaded");
+      setUploadVisibility("");
+      setLoadingVisibility("hidden");
       return;
     }
 
     const data = formatFiles(files);
-    const response = await axios.post(
-      "http://localhost:5000/upload_files",
-      data
-    );
-    console.log(response);
+
+    try {
+      const response = await fetch("http://localhost:5000/upload_files", {
+        method: "POST",
+        body: data,
+      });
+      console.log(await response.json());
+    } catch (error) {
+      if (error instanceof Error) display_error(error.message);
+    } finally {
+      setUploadVisibility("");
+      setLoadingVisibility("hidden");
+    }
+  };
+
+  const display_error = (text: string) => {
+    Swal.fire({
+      icon: "error",
+      title: "Error!",
+      text,
+    });
   };
 
   const formatFiles = (files: FileList | null) => {
@@ -41,11 +61,14 @@ const File_Upload = () => {
       }
 
     return data;
+    data;
   };
 
   return (
     <div className="flex flex-col items-center h-screen w-screen gap-6">
-      <h2 className="text-slate-400 font-bold mt-14 text-4xl w-80">
+      <h2
+        className={`text-slate-400 font-bold mt-14 text-4xl w-80 ${uploadVisibility}`}
+      >
         Upload all the quartely documents
       </h2>
       <div className="flex flex-col items-center">
@@ -84,6 +107,7 @@ const File_Upload = () => {
           </div>
         </div>
       </div>
+      <img src={loading} className={`${loadingVisibility}`} />
     </div>
   );
 };
