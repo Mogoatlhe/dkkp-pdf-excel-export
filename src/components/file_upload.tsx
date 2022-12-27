@@ -1,4 +1,7 @@
+import React from "react";
 import Folder from "./folder";
+import Swal from "sweetalert2";
+import axios from "axios";
 
 const File_Upload = () => {
   const get_files = () => {
@@ -8,6 +11,38 @@ const File_Upload = () => {
       files_btn.click();
     }
   };
+
+  const submitFile = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+
+    if (files?.length === 0) {
+      Swal.fire({
+        icon: "error",
+        title: "Error!",
+        text: "No files were uploaded",
+      });
+      return;
+    }
+
+    const data = formatFiles(files);
+    const response = await axios.post(
+      "http://localhost:5000/upload_files",
+      data
+    );
+    console.log(response);
+  };
+
+  const formatFiles = (files: FileList | null) => {
+    const data = new FormData();
+
+    if (files !== null)
+      for (let i = 0; i < files.length; i++) {
+        data.append(files[i].name, files[i]);
+      }
+
+    return data;
+  };
+
   return (
     <div className="flex flex-col items-center h-screen w-screen gap-6">
       <h2 className="text-slate-400 font-bold mt-14 text-4xl w-80">
@@ -25,8 +60,19 @@ const File_Upload = () => {
               <p className="text-slate-500">OR</p>
               <div className="border-t border-slate-500 w-8 mt-[9px]"></div>
             </div>
-            <form className="hidden">
-              <input type="file" id="files" name="files" multiple />
+            <form
+              className="hidden"
+              method="POST"
+              encType="multipart/form-data"
+            >
+              <input
+                type="file"
+                id="files"
+                name="files"
+                multiple
+                onChange={submitFile}
+                accept="application/pdf"
+              />
               <input type="submit" id="submit" />
             </form>
             <button
